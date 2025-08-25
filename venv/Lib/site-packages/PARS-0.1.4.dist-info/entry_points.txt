@@ -1,0 +1,3 @@
+[console_scripts]
+PARS = PARS.cli:main
+

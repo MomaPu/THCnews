@@ -1,0 +1,49 @@
+Metadata-Version: 2.1
+Name: ok-api
+Version: 1.0.1
+Summary: Python библиотека для работы с API Одноклассников (API Wrapper ok.ru)
+Home-page: https://github.com/needkirem/ok_api
+Author: needkirem
+Author-email: needkirem@gmail.com
+License: UNKNOWN
+Project-URL: Bug Reports, https://github.com/needkirem/ok_api/issues
+Project-URL: Source, https://github.com/needkirem/ok_api/
+Keywords: api ok wrapper
+Platform: UNKNOWN
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Requires-Python: >=3
+Description-Content-Type: text/markdown
+Requires-Dist: requests
+
+# ok_api [![PyPI](https://img.shields.io/pypi/v/ok-api?style=flat-square)](https://pypi.org/project/ok-api/) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ok-api?style=flat-square)
+
+**ok_api** - python библиотека для работы с API Одноклассников (API Wrapper ok.ru)
+
+## Установка
+```
+$ pip install ok_api
+```
+
+## Простой пример
+
+```python
+from ok_api import OkApi
+
+ok = OkApi(access_token='token', 
+           application_key='key', 
+           application_secret_key='secret')
+
+print(ok.friends.get())
+```
+
+* [Документация](./docs/doc.md)
+* [Примеры](./examples)
+
+

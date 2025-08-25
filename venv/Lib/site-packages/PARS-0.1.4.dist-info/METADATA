@@ -1,0 +1,51 @@
+Metadata-Version: 2.1
+Name: PARS
+Version: 0.1.4
+Summary: Project which enable automatic downloading data from pfam and rfam databases
+Home-page: https://github.com/JuliaGol/PARS
+Author: Julia Gołębiowska, Adam Cicherski, Patrycja Owczarek
+Author-email: je.golebiowska@student.uw.edu.pl
+License: MIT license
+Project-URL: Bug Tracker, https://github.com/JuliaGol/PARS/issues
+Keywords: PARS
+Platform: UNKNOWN
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Requires-Python: >=3.6
+License-File: LICENSE
+Requires-Dist: beautifulsoup4 (>=4.9.3)
+Requires-Dist: biopython (>=1.79)
+Requires-Dist: setuptools (>=50.3.0)
+Requires-Dist: requests (~=2.25.1)
+Requires-Dist: bs4 (>=0.0.1)
+
+# PARS (PfAm bRowSer) 
+## Description
+PARS is a python package for browsing and downloading files deposed in Pfam and Rfam databases (e.g. sequences, alignments, hmm). It has implemented classes dedicated to Pfam data like: PfamFamily or PfamClan. PARS is compatible with Biopython modules, but also is extended by HMMER wrapper which enables convenient usage of downloaded HMM files. One of the advantages of this package is the easy switch to other databases by translation of accession numbers. All of these features enable to make a detailed analysis of proteins or RNA families and deal with large datasets.
+## Installation
+
+PARS can be installed with pip:
+
+```
+$ python -m pip install PARS
+```
+Alternatively, you can grab the latest source code from GitHub:
+
+```
+$ git clone git: https://github.com/JuliaGol/PARS.git
+$ python setup.py install
+```
+
+If you want to use functions: automatic_search, hmmpress, hmmscan, hmmsearch you have to install HAMMER tools additionally. For more information about HAMMER see: [hmmer.org](http://hmmer.org).
+## Documentation
+To read the documentation click here: [documentation](https://owczarekp.github.io/PARS/ ) 
+## Examples
+To go step by step see wiki. 
+
+
