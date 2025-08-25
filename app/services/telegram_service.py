@@ -2,8 +2,9 @@ import asyncio
 from datetime import datetime, timedelta, timezone
 from telethon import TelegramClient
 from telethon.errors import MsgIdInvalidError
-import os
 from dotenv import load_dotenv
+
+from app.services.texteditor import classify_text  # Импортируем из texteditor
 
 load_dotenv()
 
@@ -31,7 +32,6 @@ class TelegramService:
 		for channel in channels:
 			try:
 				async for message in self.client.iter_messages(channel):
-					# Приводим время сообщения к тому же формату
 					message_date = message.date.replace(
 						tzinfo=timezone.utc) if message.date.tzinfo is None else message.date
 
@@ -53,15 +53,22 @@ class TelegramService:
 		return sorted(results, key=lambda x: x['date'], reverse=True)
 
 	async def _get_comments(self, channel, post_id):
-		"""Получает комментарии к посту"""
+		"""Получает комментарии к посту и классифицирует их"""
 		comments = []
 		try:
-			# Проверяем, есть ли комментарии вообще
 			async for comment in self.client.iter_messages(channel, reply_to=post_id):
-				if comment:  # Проверяем, что комментарий существует
+				if comment and comment.text:  # Проверяем, что комментарий существует и есть текст
+					# Классифицируем комментарий
+					sentiment = classify_text(comment.text)
+
+					# Добавляем метку к тексту комментария
+					classified_text = f"[{sentiment}] {comment.text}"
+
 					comments.append({
 						'date': comment.date.strftime('%H:%M'),
-						'text': comment.text or "Медиа-сообщение"
+						'text': classified_text,
+						'sentiment': sentiment,
+						'original_text': comment.text
 					})
 		except MsgIdInvalidError:
 			print(f"Сообщение {post_id} не имеет комментариев или ID неверный")
@@ -74,13 +81,13 @@ class TelegramService:
 async def main():
 	service = TelegramService()
 	news = await service.get_news(
-		channels=['Dzerzhinsk_blackhole'],
-		keywords=['переволновался'],
+		channels=['vodokanalkzn'],
+		keywords=['водоканал'],
 		days=7
 	)
 
 	# Вывод результатов
-	for i, item in enum	erate(news[:10], 1):
+	for i, item in enumerate(news[:10], 1):
 		print(f"\n{i}. {item['date']}")
 		print(f"Текст: {item['text'][:200]}{'...' if len(item['text']) > 200 else ''}")
 		print(f"Ссылка: {item['url']}")

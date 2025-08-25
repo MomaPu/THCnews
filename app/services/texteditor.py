@@ -4,8 +4,6 @@ import string
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem.snowball import RussianStemmer
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
 nltk.download("punkt")
 nltk.download("stopwords")
@@ -13,7 +11,7 @@ nltk.download("stopwords")
 stop_words = set(stopwords.words("russian"))
 stemmer = RussianStemmer()
 
-# === Функции предобработки ===
+
 def preprocess_text(text):
     text = text.lower()
     text = re.sub(r"http\S+|www\S+|https\S+", "", text)
@@ -22,28 +20,18 @@ def preprocess_text(text):
     tokens = [stemmer.stem(w) for w in tokens if w not in stop_words]
     return tokens
 
+
 def features(text):
     tokens = preprocess_text(text)
     return {word: True for word in tokens}
 
-# Для поиска повторяющихся сообщений
-def clean_for_similarity(text):
-    text = text.lower()
-    text = re.sub(r"http\S+|www\S+|https\S+", "", text)
-    text = re.sub(r"[0-9]+", "", text)  # удаляем числа
-    text = text.translate(str.maketrans("", "", string.punctuation))
-    tokens = word_tokenize(text, language="russian")
-    tokens = [stemmer.stem(w) for w in tokens if w not in stop_words]
-    return " ".join(tokens)
 
-# === Словарь негативных слов ===
 negative_triggers = [
     "жалоб", "претенз", "отврат", "плох", "недовольн",
     "мутозил", "ошибк", "сбой", "вымогательств", "обман",
     "беспредел", "хамств", "ненормальн", "катастроф", "ужас",
     "недоброго", "идиоты", "дебилы", "дауны", "конченные",
 ]
-
 
 train_data = [
     ("Низкое качество услуг у вас, я согласен! Оно во всем! Начиная с центров обслуживания, разгильдайство и халатность, и заканчивая оказываемыми услугами!", "Негативный комментарий"),
@@ -78,56 +66,18 @@ train_data = [
 train_features = [(features(text), label) for text, label in train_data]
 classifier = nltk.NaiveBayesClassifier.train(train_features)
 
-# === Классификация с учетом словаря негативных слов ===
+
 def classify_text(text):
     tokens = preprocess_text(text)
     if any(neg in tokens for neg in negative_triggers):
-        return "Негативный комментарий"
+        return "NEGATIVE"
     return classifier.classify(features(text))
 
-# === Пример комментариев ===
+
 comments = [
-    "Почему ваш сайт моментально ложится, как только я пытаюсь передать показания? Каждый месяц стабильно.",
-    "Подключил электронные квитанции, всё удобно.",
-    "Сайт компании работает через раз, показания не принимаются.",
-    "Сегодня получил квитанцию с ошибкой, нужно исправить.",
-    "Очень плохое обслуживание, сотрудники грубят!",
+    "Почему ваш сайт моментально ложится, как только я пытаюсь передать показания? Каждый месяц прям стабильно. Сделайте с этим что-то."
 ]
-
-# 1. Классификация всех комментариев
-labels = [classify_text(c) for c in comments]
-
-# 2. Подготовка для поиска повторяющихся сообщений
-cleaned_comments = [clean_for_similarity(c) for c in comments]
-vectorizer = TfidfVectorizer()
-tfidf_matrix = vectorizer.fit_transform(cleaned_comments)
-
-threshold = 0.45  # порог похожести
-
-# 3. Инициализация списка меток повторов
-is_repeated = [False] * len(comments)
-
-# 4. Поиск повторяющихся сообщений (взаимная проверка всех пар)
-n = len(comments)
-for i in range(n):
-    for j in range(i + 1, n):
-        sim = cosine_similarity(tfidf_matrix[i], tfidf_matrix[j])[0][0]
-        if sim > threshold:
-            is_repeated[i] = True
-            is_repeated[j] = True
-
-# 5. Обновляем метки с учётом повторов
-final_labels = []
-for label, repeated in zip(labels, is_repeated):
-    if repeated:
-        if label == "Негативный комментарий":
-            final_labels.append("Негативный повторяющийся комментарий")
-        else:
-            final_labels.append("Повторяющийся комментарий")
-    else:
-        final_labels.append(label)
-
-# 6. Сохраняем результат в файл
 with open("classified_comments.txt", "w", encoding="utf-8") as f:
-    for label, comment in zip(final_labels, comments):
-        f.write(f"[{label}] {comment}\n")
+    for c in comments:
+        label = classify_text(c)
+        f.write(f"[{label}] {c}\n")
