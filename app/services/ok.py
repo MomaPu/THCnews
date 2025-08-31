@@ -287,7 +287,7 @@ class OKServiceSelenium:
 		"""Сохраняет негативные комментарии в JSON"""
 		try:
 			for comment in comments:
-				if comment['sentiment'] == "Негативный":
+				if comment['sentiment'] == "Негативный комментарий":
 					bad_comment_data = {
 						'platform_comment_id': hashlib.md5(comment['text'].encode()).hexdigest(),
 						'post_id': post.id,

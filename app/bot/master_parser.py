@@ -14,7 +14,7 @@ from app import create_app
 
 # Создаем приложение
 app = create_app()
-
+VK_TOKEN = os.getenv('VK_TOKEN')
 
 async def parse_telegram_channels():
 	"""Запускает парсинг Telegram каналов"""
@@ -27,7 +27,7 @@ async def parse_telegram_channels():
 			keywords=['ТНС энерго НН', 'ТНС энерго Нижний Новгород', 'ТНС',
 					  'Энергосбыт Нижний Новгород', "ТНС Нижний"
 		],
-			days=5
+			days=7
 		)
 
 		return {'saved': len(results), 'details': results}
@@ -43,7 +43,7 @@ async def parse_vk_groups():
 		from app.services.vk_service import VKService
 
 		# Замените на ваш реальный VK токен
-		vk_service = VKService(token='5746854757468547574685473b547eebd055746574685473fdcc76d76189e0967f0739b')
+		vk_service = VKService(VK_TOKEN)
 
 		results = await vk_service.parse_groups_sequentially()
 

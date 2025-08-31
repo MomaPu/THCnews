@@ -23,9 +23,8 @@ from app.services.texteditor import classify_text
 
 load_dotenv()
 
-
-API_ID = 20304623
-API_HASH = "c1622024c0ad17c26fbd6b34f1d9ef1c"
+API_ID = os.getenv('API_ID')
+API_HASH = os.getenv('API_HASH')
 
 
 class TelegramService:
@@ -384,9 +383,15 @@ async def main():
 			search_terms = keywords + hashtags
 
 			news = await service.get_news(
-				channels=['Dzerzhinsk_blackhole', 'tns_energo_nn'],
+				channels=[
+					'nnzhest',
+					'tns_energo_nn',
+					'today_nn',
+					'moynizhny',
+
+				],
 				keywords=search_terms,
-				days=5
+				days=14
 			)
 
 			print(f"Найдено {len(news)} постов")

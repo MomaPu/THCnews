@@ -53,6 +53,7 @@ def get_main_keyboard():
 	keyboard.add(types.KeyboardButton("Последние новости"))
 	keyboard.add(types.KeyboardButton("Выбрать период"))
 	keyboard.add(types.KeyboardButton("Комментарии для модерации"))
+	keyboard.add(types.KeyboardButton("Комментарии-упоминания"))
 	keyboard.add(types.KeyboardButton("Запустить парсер"))
 	keyboard.add(types.KeyboardButton("Статус парсера"))
 	return keyboard
@@ -84,6 +85,65 @@ def get_bad_comments_db_wrapper(limit=20):
 		from app.bot.core import get_bad_comments_from_json
 		return get_bad_comments_from_json(limit)
 
+
+def get_mention_comments_db(limit=20):
+	"""Получает комментарии с sentiment 'Упоминание' из БД"""
+	with app.app_context():
+		try:
+			comments = PostComment.query.filter(
+				PostComment.sentiment == 'Упоминание'
+			).order_by(PostComment.publish_date.desc()).limit(limit).all()
+
+			# Преобразуем в словари для единообразия
+			result = []
+			for comment in comments:
+				result.append({
+					'text': comment.text,
+					'user_id': comment.platform_user_id,
+					'publish_date': comment.publish_date.isoformat() if comment.publish_date else 'Неизвестно',
+					'likes_count': comment.likes_count,
+					'sentiment': comment.sentiment,
+					'post_title': comment.post.text[
+								  :100] + '...' if comment.post and comment.post.text else 'Без названия',
+					'post_url': comment.post.url if comment.post else 'Отсутствует'
+				})
+
+			return result
+		except Exception as e:
+			print(f"Ошибка при получении комментариев-упоминаний: {e}")
+			return []
+
+def show_mention_comments(message):
+    try:
+        # Получаем комментарии-упоминания из БД
+        mention_comments = get_mention_comments_db(limit=100)
+
+        if mention_comments:
+            response = "🔍 Комментарии-упоминания:\n\n"
+
+            for i, comment in enumerate(mention_comments, 1):
+                comment_text = f"{i}. {comment.get('text', 'Без текста')}\n"
+                comment_text += f"👤 {comment.get('user_id', 'Неизвестно')}\n"
+                comment_text += f"📅 {comment.get('publish_date', 'Неизвестно')}\n"
+                comment_text += f"👍 {comment.get('likes_count', 0)}\n"
+                comment_text += f"📝 {comment.get('post_title', 'Без названия')}\n\n"
+                comment_text += f"{comment.get('post_url', 'Отсутствует')}\n\n"
+
+                if len(response) + len(comment_text) > 4000:
+                    bot.send_message(message.chat.id, response)
+                    response = "Продолжение упоминаний:\n\n"
+
+                response += comment_text
+
+            if response.strip():
+                bot.send_message(message.chat.id, response)
+
+        else:
+            bot.send_message(message.chat.id, "✅ Комментариев-упоминаний не найдено.")
+
+    except Exception as e:
+        bot.send_message(message.chat.id, "❌ Произошла ошибка при загрузке комментариев-упоминаний.")
+        print(f"Error: {e}")
 
 def get_latest_news(limit=10):
 	"""Получает последние новости в контексте приложения"""
@@ -159,9 +219,6 @@ def schedule_daily_parser():
 	# Запуск каждый день в 9:00
 	schedule.every().day.at("09:00").do(daily_parser_job)
 
-	# Также запуск при старте (если еще не запускался сегодня)
-	if not last_parser_run or last_parser_run.date() < datetime.now().date():
-		schedule.every(1).minutes.do(daily_parser_job).run_once()
 
 	print("📅 Планировщик ежедневного парсера настроен")
 
@@ -183,11 +240,16 @@ def send_welcome(message):
 		"- Получить последние новости\n"
 		"- Выбрать период для показа новостей\n"
 		"- Просмотреть комментарии для модерации\n"
+		"- Просмотреть комментарии-упоминания\n"
 		"- Запустить парсер вручную\n"
 		"- Проверить статус парсера",
 		reply_markup=get_main_keyboard()
 	)
 
+@bot.message_handler(func=lambda message: message.text == "Комментарии-упоминания")
+def handle_mention_comments(message):
+    print("Обработка кнопки 'Комментарии-упоминания'")
+    show_mention_comments(message)
 
 @bot.message_handler(commands=['run_parser'])
 def run_parser_command(message):
