@@ -87,12 +87,22 @@ def get_bad_comments_db_wrapper(limit=20):
 
 
 def get_mention_comments_db(limit=20):
-	"""Получает комментарии с sentiment 'Упоминание' из БД"""
+	"""Получает комментарии с sentiment 'Упоминание ТНС' из БД"""
 	with app.app_context():
+		result = db.session.execute(db.text("SELECT current_database()")).scalar()
+		print(f"📊 Telegram Service подключен к БД: {result}")
 		try:
+			print("🔍 Ищем комментарии с sentiment 'Упоминание ТНС' в БД...")
+			db.session.expire_all()
+			# Проверим сначала все существующие sentiment'ы
+			all_sentiments = db.session.query(PostComment.sentiment).distinct().all()
+			print(f"📊 Все sentiment'ы в БД: {[s[0] for s in all_sentiments]}")
+
 			comments = PostComment.query.filter(
-				PostComment.sentiment == 'Упоминание'
+				PostComment.sentiment == 'Упоминание ТНС'
 			).order_by(PostComment.publish_date.desc()).limit(limit).all()
+
+			print(f"✅ Найдено комментариев с 'Упоминание ТНС': {len(comments)}")
 
 			# Преобразуем в словари для единообразия
 			result = []
@@ -109,8 +119,11 @@ def get_mention_comments_db(limit=20):
 				})
 
 			return result
+
 		except Exception as e:
-			print(f"Ошибка при получении комментариев-упоминаний: {e}")
+			print(f"❌ Ошибка при получении комментариев-упоминаний: {e}")
+			import traceback
+			traceback.print_exc()
 			return []
 
 def show_mention_comments(message):

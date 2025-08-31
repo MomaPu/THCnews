@@ -272,6 +272,7 @@ class TelegramService:
 			async for comment in self.client.iter_messages(channel, reply_to=post_id, limit=50):
 				if comment and comment.text:
 					sentiment = classify_text(comment.text)
+					print(sentiment)
 					print(f"📝 Комментарий: {comment.text[:50]}... -> {sentiment}")
 
 					# Сохраняем комментарий в БД
@@ -318,8 +319,11 @@ class TelegramService:
 			print(f"Ошибка при получении комментариев для сообщения {post_id}: {e}")
 
 		return comments_data
+
 	async def _save_comment(self, post, comment, sentiment):
 		"""Сохраняет комментарий в БД"""
+		result = db.session.execute(db.text("SELECT current_database()")).scalar()
+		print(f"📊 Bot подключен к БД: {result}")
 		comment_id_str = str(comment.id)
 		user_id = self._extract_user_id(getattr(comment, 'from_id', ''))
 		user_id_str = user_id if user_id else 'unknown'
@@ -344,7 +348,15 @@ class TelegramService:
 				platform_data=platform_data
 			)
 			db.session.add(new_comment)
-			return new_comment
+
+			try:
+				db.session.commit()
+				print(f"💾 УСПЕШНО сохранен комментарий: {sentiment} - {comment.text[:50]}...")
+				return new_comment
+			except Exception as e:
+				print(f"❌ Ошибка коммита комментария: {e}")
+				db.session.rollback()
+				return None
 
 		return existing_comment
 
