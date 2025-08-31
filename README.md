@@ -53,7 +53,11 @@ python main.py
 ### Используемые технологии
 - Python 3.11.1  
 - Flask 3.1.1
-- PostgreSQL 13.10  
+- PostgreSQL 13.10
+- nltk 3.9.1
+- selenium 4.35.0
+- telebot 0.0.5
+- Telethon 1.40.0
 
 ### Автор
 Семячкин Матвей Витальевич
