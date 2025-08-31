@@ -1,42 +1,66 @@
-from app.services.vk_service import VKService
+from app.config import create_app, db
+from app.models.models import NewsSource, NewsPost
+from sqlalchemy import text  # Добавьте этот импорт
 
+app = create_app()
 
-def main():
-	# Инициализация сервиса
-	vk_service = VKService(token='5746854757468547574685473b547eebd055746574685473fdcc76d76189e0967f0739b')
+with app.app_context():
+	# Проверяем подключение - ИСПРАВЛЕННАЯ ВЕРСИЯ
+	try:
+		result = db.session.execute(text('SELECT 1'))  # Добавьте text()
+		print("✅ Подключение к БД успешно")
+	except Exception as e:
+		print(f"❌ Ошибка подключения: {e}")
+		import traceback
 
-	#domain = "nn800"
-	#search_keywords = ['нижний','онлайн']
-	search_days = 30
-	#news = vk_service.get_company_news(domain)
-	results = vk_service.get_posts_with_comments(
-		group_domain="tns_energo_nn",
-		keywords= ['Кассы','интенсивной','важна','вдохновением'],
-		comments_count=10
-	)
-	# Выводим результаты
-	'''print(f"\nНайдено {len(news)} постов для {domain}:")
-	for i, post in enumerate(news, 1):
-		print(f"\nПост #{i}:")
-		print(f"Текст: {post['text'][:100]}...")
-		print(f"Дата: {post['date']}")
-		print(f"URL: {post['url']}")'''
-	'''
-	# Вывод результатов
-	print(f"Найдено {len(results)} постов:")
-	for i, post in enumerate(results, 1):
-		print(f"\n#{i} [{post['date']}] Лайков: {post['likes']}")
-		print(post['text'][:200] + ("..." if len(post['text']) > 200 else ""))
-		print(post['url'])
-		'''
-	for post in results:
-		print(f"\nПост: {post['text'][:100]}... ({post['date']})")
-		print(f"URL: {post['url']}")
-		print(f"Комментариев: {len(post['comments'])}")
+		traceback.print_exc()
+		exit(1)
 
-		for i, comment in enumerate(post['comments'][:3], 1):  # Первые 3 комментария
-			author = comment.get('author', {}).get('name', 'Аноним')
-			print(f"  {i}. [{author}]: {comment['text'][:50]}...")
+	# Проверяем таблицы
+	try:
+		tables = db.inspect(db.engine).get_table_names()
+		print(f"📊 Таблицы в базе: {tables}")
+	except Exception as e:
+		print(f"❌ Ошибка при проверке таблиц: {e}")
+		exit(1)
 
-if __name__ == "__main__":
-	main()
+	# Создаем тестовые данные
+	try:
+		if 'news_source' in tables:
+			# Проверяем, нет ли уже тестовых данных
+			existing = NewsSource.query.filter_by(source_id='test_channel').first()
+			if not existing:
+				test_source = NewsSource(
+					platform='test',
+					source_id='test_channel',
+					source_name='Test Channel',
+					source_type='test'
+				)
+				db.session.add(test_source)
+				db.session.flush()
+
+				test_post = NewsPost(
+					platform='test',
+					platform_post_id='12345',  # Строковый ID!
+					source_id=test_source.id,
+					text='Test post content',
+					author='Test Author'
+				)
+				db.session.add(test_post)
+				db.session.commit()
+				print("✅ Тестовые данные добавлены успешно")
+			else:
+				print("ℹ️ Тестовые данные уже существуют")
+
+		# Читаем данные обратно
+		posts = NewsPost.query.all()
+		print(f"📝 Постов в базе: {len(posts)}")
+		for post in posts:
+			print(f"  - ID: {post.platform_post_id} (тип: {type(post.platform_post_id).__name__})")
+
+	except Exception as e:
+		print(f"❌ Ошибка при работе с данными: {e}")
+		db.session.rollback()
+		import traceback
+
+		traceback.print_exc()

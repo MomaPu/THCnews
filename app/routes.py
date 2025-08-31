@@ -1,10 +1,21 @@
-from flask import Flask, request, jsonify
+from flask import Blueprint, request, jsonify
 from app.bot.core import handle_update
 
-app = Flask(__name__)
 
-@app.route('/webhook', methods=['POST'])
+main = Blueprint('main', __name__)
+
+@main.route('/')
+def index():
+    return "🤖 Новостной бот работает!"
+
+@main.route('/webhook', methods=['POST'])
 def webhook():
-    update = request.json
-    handle_update(update)
-    return jsonify({'status': 'ok'})
+    """Webhook endpoint для Telegram"""
+    return handle_update()
+
+@main.route('/health')
+def health_check():
+    """Health check endpoint"""
+    return jsonify({"status": "ok", "message": "Service is healthy"})
+
+# Другие маршруты...

@@ -1,0 +1,255 @@
+[
+  {
+    "domain": "ok.ru",
+    "httpOnly": false,
+    "name": "TD",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "199"
+  },
+  {
+    "domain": "ok.ru",
+    "httpOnly": false,
+    "name": "TZD",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "6.199"
+  },
+  {
+    "domain": "ok.ru",
+    "expiry": 1756417452,
+    "httpOnly": false,
+    "name": "tmr_detect",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "0%7C1756331052317"
+  },
+  {
+    "domain": ".ok.ru",
+    "expiry": 1790890810,
+    "httpOnly": false,
+    "name": "_ga",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "GA1.2.323794600.1756330810"
+  },
+  {
+    "domain": "ok.ru",
+    "httpOnly": false,
+    "name": "CDN",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": ""
+  },
+  {
+    "domain": ".ok.ru",
+    "expiry": 1756417449,
+    "httpOnly": false,
+    "name": "web_prmbnr_583256977084",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": true,
+    "value": "AgPEewAiAGkAZAAiADoAMgAwADAALAAiAHQAeQBwAGUAIgA6ACIARgBVAEwATABfAEkATQBBAEcARQAiACwAIgB0AGkAdABsAGUAIgA6ACIAMQBzAGUAcAAxAGMAaABhAG4AbgBlAGwALgB0AGkAdABsAGUAIgAsACIAZABlAHMAYwAiADoAIgAxAHMAZQBwADEAYwBoAGEAbgBuAGUAbAAuAGQAZQBzAGMAcgBpAHAAdABpAG8AbgAiACwAIgBpAG0AZwBTAHIAYwAiADoAbgB1AGwAbAAsACIAbABpAG4AawAiADoAIgBoAHQAdABwAHMAOgAvAC8AbwBrAC4AbQBlAC8AYQBaAG4ATQAxACIALAAiAGwAaQBuAGsAVABlAHgAdAAiADoAIgAxAHMAZQBwADEAYwBoAGEAbgBuAGUAbAAuAGIAdQB0AHQAbwBuACIALAAiAGMAbABvAHMAZQBCAHUAdAB0AG8AbgBUAGUAeAB0ACIAOgAiADgAbQBhAHIAYwBoADIAMAAyADQALgBwAGEAZwBlADEALgBjAGwAbwBzAGUAQgB1AHQAdABvAG4AIgAsACIAYgBhAGMAawBnAHIAbwB1AG4AZABJAG0AYQBnAGUAVQByAGwAWAAxACIAOgAiAGgAdAB0AHAAcwA6AC8ALwBpAC4AbwBrAGMAZABuAC4AcgB1AC8AaQA/AHIAPQBCAEQARQB0AGoATgA3AFoAbgBlAC0AQgBWAHoAWgByAFIARgB5AHAASgB0AFAAZABJAFcAbgBWADkAYwA4ADUAQQBrAGIAUgBvAHcASwBBAHUAcgBxAGgAUgBDAEoARgA5AEoAVgBRAFoASgBoAFAAcABQAE8ASQBjAEkARABjADUAZQBjACIALAAiAGIAYQBjAGsAZwByAG8AdQBuAGQASQBtAGEAZwBlAFUAcgBsAFgAMgAiADoAIgBoAHQAdABwAHMAOgAvAC8AaQAuAG8AawBjAGQAbgAuAHIAdQAvAGkAPwByAD0AQgBEAEUAdABqAE4ANwBaAG4AZQAtAEIAVgB6AFoAcgBSAEYAeQBwAEoAdABQAGQAbgBtADgAaABfAGgAVQAtAGMAcQBWAFUAeQBjAHYAUQBTAEgAaQBqAHMAUwBKAEYAOQBKAFYAUQBaAEoAaABQAHAAUABPAEkAYwBJAEQAYwA1AGUAYwAiACwAIgBiAGEAYwBrAGcAcgBvAHUAbgBkACIAOgBuAHUAbABsACwAIgBhAGQASQBuAGYAbwAiADoAbgB1AGwAbAB9AA=="
+  },
+  {
+    "domain": ".ok.ru",
+    "expiry": 1756935849,
+    "httpOnly": true,
+    "name": "vdt",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": true,
+    "value": "KdKKg9AE/yUXErzSLOnr6PHQmry6LlEPIa01kNSS6ZgAAABmPADhPILl//CBUqMrcBmxfE0WqiYwUI4nnYVh0v+9F2k620CYrpPoZyKu00uUKExPw1fWpuC9hwkNDLHEDqqy01JdltwAJJVMrN2C0jOR2WDmiHoXQMfvoWFDAo9azBNA9dbdyd4="
+  },
+  {
+    "domain": "ok.ru",
+    "expiry": 1756935849,
+    "httpOnly": true,
+    "name": "theme_mode",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": true,
+    "value": "LIGHT"
+  },
+  {
+    "domain": ".ok.ru",
+    "httpOnly": false,
+    "name": "LASTSRV",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": true,
+    "value": "ok.ru"
+  },
+  {
+    "domain": ".ok.ru",
+    "httpOnly": true,
+    "name": "JSESSIONID",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "9f37c101fbd3036c456d5baca9e445dc66f9526c8e4b548a.7725a4"
+  },
+  {
+    "domain": ".ok.ru",
+    "expiry": 1787867049,
+    "httpOnly": true,
+    "name": "AUTHCODE",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "JcHTPmR4neiLFsb9RhbzcOJ0WbzDnhoxDPGRQJTP3PRkd2IlX_WqvpWW4c2O7DbYQihMKiYFbw4HFbhHseEqplDOTnr-XCwC263zOEPeSAfT4jB0idMBYq6A-sQz0QYPDB4j9ulOZts8pqSODw_5"
+  },
+  {
+    "domain": ".ok.ru",
+    "expiry": 1785102249,
+    "httpOnly": false,
+    "name": "tmr_lvidTS",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "1756330810073"
+  },
+  {
+    "domain": ".ok.ru",
+    "expiry": 1787866810,
+    "httpOnly": false,
+    "name": "_ym_uid",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "1756330810166240378"
+  },
+  {
+    "domain": ".ok.ru",
+    "expiry": 1790891049,
+    "httpOnly": false,
+    "name": "_ga_GEGXS3ELM6",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "GS2.1.s1756330810$o1$g1$t1756331049$j47$l0$h0"
+  },
+  {
+    "domain": "ok.ru",
+    "expiry": 1790891049,
+    "httpOnly": false,
+    "name": "__last_online",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": true,
+    "value": "1756331049035"
+  },
+  {
+    "domain": ".ok.ru",
+    "expiry": 1787866810,
+    "httpOnly": false,
+    "name": "_ym_d",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "1756330810"
+  },
+  {
+    "domain": "ok.ru",
+    "expiry": 1757627050,
+    "httpOnly": false,
+    "name": "__dzbd",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "false"
+  },
+  {
+    "domain": ".ok.ru",
+    "expiry": 1756402810,
+    "httpOnly": false,
+    "name": "_ym_isad",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "2"
+  },
+  {
+    "domain": "ok.ru",
+    "expiry": 1756935850,
+    "httpOnly": false,
+    "name": "domain_sid",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "WqS3IQyGcVW5IHFKh_K78%3A1756331050051"
+  },
+  {
+    "domain": ".ok.ru",
+    "expiry": 1756417210,
+    "httpOnly": false,
+    "name": "_gid",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "GA1.2.420038532.1756330810"
+  },
+  {
+    "domain": ".ok.ru",
+    "expiry": 1785102249,
+    "httpOnly": false,
+    "name": "tmr_lvid",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "3df6a4e8d9d73b410c382513a1f7acdf"
+  },
+  {
+    "domain": ".ok.ru",
+    "expiry": 1790890809,
+    "httpOnly": true,
+    "name": "bci",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": true,
+    "value": "-9053841029429782354"
+  },
+  {
+    "domain": "ok.ru",
+    "httpOnly": false,
+    "name": "TZ",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "6"
+  },
+  {
+    "domain": "ok.ru",
+    "httpOnly": false,
+    "name": "viewport",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "824"
+  },
+  {
+    "domain": ".ok.ru",
+    "expiry": 1756935849,
+    "httpOnly": true,
+    "name": "msg_conf",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": true,
+    "value": "2468555756792551"
+  },
+  {
+    "domain": ".ok.ru",
+    "expiry": 1790890809,
+    "httpOnly": true,
+    "name": "_statid",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": true,
+    "value": "3892e0da-7637-49ce-9ca8-10852f39dce0"
+  }
+]

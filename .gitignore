@@ -1,0 +1,11 @@
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+static/
+.idea/
+.env
+secrets.json
+*.log
+*.swp
+*~
